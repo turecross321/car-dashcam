@@ -27,16 +27,20 @@ def new_rpm(r):
     global rpm
     rpm = r.value
 
+print(f"Ensuring {VIDEO_DIRECTORY} exists...")
 # Ensure video directory exists
 pathlib.Path(VIDEO_DIRECTORY).mkdir(parents=True, exist_ok=True) 
 
+print(f"Starting video capture...")
 cap = cv.VideoCapture(DEVICE)
 
+print(f"Connecting to OBD device...")
 connection = obd.Async()
 connection.watch(obd.commands.SPEED, callback=new_speed)
 connection.watch(obd.commands.RPM, callback=new_rpm)
 connection.start()
 
+print(f"Starting recording...")
 # Define the codec and create VideoWriter object
 fourcc = cv.VideoWriter_fourcc(*'XVID')
 now = datetime.now()
