@@ -1,11 +1,10 @@
-import numpy as np
 import cv2 as cv
 from datetime import datetime
 from obd import OBDStatus
 import obd
 import pathlib
 
-DEVICE = 1
+DEVICE = 0
 WIDTH = 640
 HEIGHT = 480
 FPS = 30
