@@ -8,16 +8,18 @@ DEVICE = 0
 WIDTH = 640
 HEIGHT = 480
 FPS = 24
-USE_MPH = False
 VIDEO_DIRECTORY = "videos//"
+
+USE_OBD = True
+USE_MPH = False
 
 FONT_SIZE = 0.7
 FONT = cv.FONT_HERSHEY_SIMPLEX
 FONT_COLOR = (255, 255, 255)
 FONT_THICKNESS = 2
 
-speed = 0
-rpm = 0
+speed = None
+rpm = None
 
 def new_speed(s):
     global speed
@@ -61,17 +63,21 @@ while cap.isOpened():
     cv.putText(frame, date_text, (0, HEIGHT), FONT, FONT_SIZE, outline_color, outline_thickness, cv.LINE_4)
     cv.putText(frame, date_text, (0, HEIGHT), FONT, FONT_SIZE, FONT_COLOR, FONT_THICKNESS, cv.LINE_4)
 
-    if connection.status == OBDStatus.CAR_CONNECTED:
-        speed_unit = "mph" if USE_MPH else "km/h"
-        speed_magnitude = round(speed.magnitude)
-        if USE_MPH:
-            speed_magnitude = round(speed.to("mph").magnitude)
-        
+    if USE_OBD:
+        try:
+            speed_unit = "mph" if USE_MPH else "km/h"
+            speed_magnitude = round(speed.value.magnitude)
+            if USE_MPH:
+                speed_magnitude = round(speed.value.to("mph").magnitude)
+            
+            rpm_magnitude = round(rpm.value.magnitude)
 
-        obd_text = f'{speed_magnitude} {speed_unit}, {rpm.magnitude} RPM'
-        (obd_text_width, obd_text_height) = cv.getTextSize(obd_text, FONT, FONT_SIZE, FONT_THICKNESS)[0]
-        cv.putText(frame, obd_text, (WIDTH - obd_text_width, HEIGHT), FONT, FONT_SIZE, outline_color, outline_thickness, cv.LINE_4)
-        cv.putText(frame, obd_text, (WIDTH - obd_text_width, HEIGHT), FONT, FONT_SIZE, FONT_COLOR, FONT_THICKNESS, cv.LINE_4)
+            obd_text = f'{rpm_magnitude} RPM {speed_magnitude} {speed_unit}'
+            (obd_text_width, obd_text_height) = cv.getTextSize(obd_text, FONT, FONT_SIZE, FONT_THICKNESS)[0]
+            cv.putText(frame, obd_text, (WIDTH - obd_text_width, HEIGHT), FONT, FONT_SIZE, outline_color, outline_thickness, cv.LINE_4)
+            cv.putText(frame, obd_text, (WIDTH - obd_text_width, HEIGHT), FONT, FONT_SIZE, FONT_COLOR, FONT_THICKNESS, cv.LINE_4)
+        except:
+            pass
 
     out.write(frame)
 
