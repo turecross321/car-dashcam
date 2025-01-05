@@ -17,8 +17,6 @@ FONT = cv.FONT_HERSHEY_SIMPLEX
 FONT_COLOR = (255, 255, 255)
 FONT_THICKNESS = 2
 
-
-
 speed = 0
 rpm = 0
 
