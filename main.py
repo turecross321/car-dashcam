@@ -42,9 +42,9 @@ connection.start()
 
 print(f"Starting recording...")
 # Define the codec and create VideoWriter object
-fourcc = cv.VideoWriter_fourcc(*'XVID')
+fourcc = cv.VideoWriter_fourcc(*'MP4V') 
 now = datetime.now()
-out = cv.VideoWriter(VIDEO_DIRECTORY + now.strftime("%Y-%m-%d_%H-%M-%S") + ".mkv", fourcc, FPS, (WIDTH,  HEIGHT))
+out = cv.VideoWriter(VIDEO_DIRECTORY + now.strftime("%Y-%m-%d_%H-%M-%S") + ".mp4", fourcc, FPS, (WIDTH,  HEIGHT))
 
 while cap.isOpened():
     date = datetime.now()
