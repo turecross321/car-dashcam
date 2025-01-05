@@ -7,7 +7,7 @@ import pathlib
 DEVICE = 0
 WIDTH = 640
 HEIGHT = 480
-FPS = 30
+FPS = 24
 SPEED_UNIT = "kph" # = "mph"
 VIDEO_DIRECTORY = "videos//"
 
@@ -42,9 +42,9 @@ connection.start()
 
 print(f"Starting recording...")
 # Define the codec and create VideoWriter object
-fourcc = cv.VideoWriter_fourcc(*'MP4V') 
+fourcc = cv.VideoWriter_fourcc(*'DIVX') 
 now = datetime.now()
-out = cv.VideoWriter(VIDEO_DIRECTORY + now.strftime("%Y-%m-%d_%H-%M-%S") + ".mp4", fourcc, FPS, (WIDTH,  HEIGHT))
+out = cv.VideoWriter(VIDEO_DIRECTORY + now.strftime("%Y-%m-%d_%H-%M-%S") + ".mkv", fourcc, FPS, (WIDTH,  HEIGHT))
 
 while cap.isOpened():
     date = datetime.now()
